@@ -1,0 +1,16 @@
+SHARED
+Row-level shared locks allow multiple users to read data, but do not allow any users to change that data.
+Table-level shared locks allow multiple users to perform read and write operations on the table, but do not allow any users to perform DDL operations.
+Multiple users can hold shared locks simultaneously.
+
+EXCLUSIVE
+An exclusive lock allows only one user/connection to update a particular piece of data (insert, update, and delete). When one user has an exclusive lock on a row or table, no other lock of any type may be placed on it.
+
+UPDATE
+Update locks are always row-level locks. When a user accesses a row with the SELECT... FOR UPDATE statement, the row is locked with an update mode lock. This means that no other user can read or update the row and ensures the current user can later update the row.
+Update locks are similar to exclusive locks. The main difference between the two is that you can acquire an update lock when another user already has a shared lock on the same record. This lets the holder of the update lock read data without excluding other users. However, once the holder of the update lock changes the data, the update lock is converted into an exclusive lock.
+Also, update locks are asymmetric with respect to shared locks. You can acquire an update lock on a record that already has a shared lock, but you cannot acquire a shared lock on a record that already has an update lock. Because an update lock prevents subsequent read locks, it is easier to convert the update lock to an exclusive lock.
+
+
+FROM:
+https://www.ibm.com/support/knowledgecenter/en/SSPK3V_7.0.0/com.ibm.swg.im.soliddb.sql.doc/doc/shared.exclusive.and.update.locks.html
